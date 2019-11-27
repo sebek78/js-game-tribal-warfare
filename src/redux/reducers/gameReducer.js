@@ -12,6 +12,8 @@ export default function gameReducer(state = initialState.game, action) {
           phase: action.currentPhase + 1
         };
       }
+    case types.INIT_GAME_SUCCESS:
+      return { ...state, deck: action.initDeck };
     default:
       return state;
   }
