@@ -1,3 +1,12 @@
-p {
-  color: blue;
+body {
+  background-color: #999;
+  color: black;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+a {
+  color: black;
 }
