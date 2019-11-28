@@ -10,22 +10,26 @@ class Game extends React.Component {
       currentPlayer: 1
     },
     players: [{ name: "" }, { name: "" }],
-    people: []
+    people: [],
+    deck: []
   };
 
   componentDidMount() {
-    console.log(this.props);
-    const { game, players, people } = this.props;
+    const { game, players, people, deck } = this.props;
     this.setState({
       game: game,
       players,
-      people
+      people,
+      deck
     });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.game !== prevProps.game)
       this.setState({ game: this.props.game });
+    if (this.props.deck !== prevProps.deck)
+      this.setState({ deck: this.props.deck });
+    console.log("update");
   }
 
   renderSwitch = () => {
@@ -38,6 +42,7 @@ class Game extends React.Component {
   };
 
   render() {
+    console.log("render");
     return (
       <div>
         <hr />
@@ -73,6 +78,14 @@ class Game extends React.Component {
               }
             })}
           </ul>
+          <p>Karty</p>
+          <ul>
+            {this.state.deck.map((card, i) => {
+              if (card.owner === 0) {
+                return <li key={i}>{card.name.toString()}</li>;
+              }
+            })}
+          </ul>
         </div>
         <div className="playerView">
           <p>
@@ -89,6 +102,14 @@ class Game extends React.Component {
               }
             })}
           </ul>
+          <p>Karty</p>
+          <ul>
+            {this.state.deck.map((card, i) => {
+              if (card.owner === 1) {
+                return <li key={i}>{card.name.toString()}</li>;
+              }
+            })}
+          </ul>
         </div>
       </div>
     );
@@ -98,7 +119,8 @@ Game.propTypes = {
   game: PropTypes.object.isRequired,
   nextPhase: PropTypes.func.isRequired,
   players: PropTypes.array,
-  people: PropTypes.array
+  people: PropTypes.array,
+  deck: PropTypes.array
 };
 
 function mapStateToProps(state) {

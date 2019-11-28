@@ -8,6 +8,7 @@ deckData.forEach(cardData => {
     newCard.name = cardData.name;
     newCard.type = cardData.type;
     newCard.value = cardData.value;
+    newCard.owner = null;
     newDeck.push(newCard);
   }
 });

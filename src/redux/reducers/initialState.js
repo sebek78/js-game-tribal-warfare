@@ -32,6 +32,4 @@ initialState.players.forEach(player => {
 
 initialState.people = people;
 
-console.log(initialState);
-
 export default initialState;
