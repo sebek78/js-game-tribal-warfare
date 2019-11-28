@@ -10,14 +10,14 @@ export function drawCard(id) {
 
 export function gainFood(cardID, cardValue, playerID) {
   return function(dispatch) {
-    dispatch(discardFoodCard(cardID));
+    dispatch(discardCard(cardID));
     return dispatch(addFood(playerID, cardValue));
   };
 }
 
-export function discardFoodCard(cardID) {
+export function discardCard(cardID) {
   return {
-    type: types.DISCARD_FOOD_CARD,
+    type: types.DISCARD_CARD,
     cardID
   };
 }

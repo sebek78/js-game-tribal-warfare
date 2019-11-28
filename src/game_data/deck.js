@@ -1,16 +1,18 @@
 import deckData from "./deckData";
 
 let newDeck = [];
+let cardID = 0;
 
-deckData.forEach((cardData, j) => {
+deckData.forEach(cardData => {
   for (let i = 0; i < cardData.number; i++) {
     let newCard = {};
     newCard.name = cardData.name;
     newCard.type = cardData.type;
     newCard.value = cardData.value;
     newCard.owner = null;
-    newCard.id = j;
+    newCard.id = cardID;
     newDeck.push(newCard);
+    cardID++;
   }
 });
 

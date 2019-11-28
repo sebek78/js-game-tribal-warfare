@@ -15,17 +15,18 @@ let initialState = {
 
 initialState.deck = shuffledDeck;
 
-const person = {
-  owner: "",
+export const person = {
+  name: "Plemienny",
+  owner: null,
   prisoner: false,
   strength: 1,
   meleeWeapon: null,
   rangedWeapon: null
 };
 let people = [];
-initialState.players.forEach(player => {
+initialState.players.forEach((player, id) => {
   for (let i = 0; i < 10; i++) {
-    const newPerson = { ...person, owner: player.name };
+    const newPerson = { ...person, owner: id };
     people.push(newPerson);
   }
 });

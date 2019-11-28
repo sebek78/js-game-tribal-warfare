@@ -1,12 +1,15 @@
 export default {
   // game action types
   NEXT_PHASE: "NEXT_PHASE",
-  ADD_FOOD: "ADD_FOOD",
 
   // deck action types
   DRAW_CARD: "DRAW_CARD",
-  DISCARD_FOOD_CARD: "DISCARD_FOOD_CARD",
+  DISCARD_CARD: "DISCARD_CARD",
 
   // player action types
-  GAIN_FOOD: "GAIN_FOOD"
+  ADD_FOOD: "ADD_FOOD",
+
+  // people action types
+  ADD_NEW_COMMON_PERSON: "ADD_NEW_COMMON_PERSON",
+  ADD_NEW_PERSON: "ADD_NEW_PERSON"
 };

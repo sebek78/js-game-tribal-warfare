@@ -38,6 +38,10 @@ class Game extends React.Component {
       console.log("update players");
       this.setState({ players: this.props.players });
     }
+    if (this.props.people !== prevProps.people) {
+      console.log("update people");
+      this.setState({ people: this.props.people });
+    }
   }
 
   renderSwitch = () => {
@@ -51,8 +55,20 @@ class Game extends React.Component {
     }
   };
 
+  renderCardType = (cardType, cardValue) => {
+    switch (cardType) {
+      case "food":
+        return `(żywność: +${cardValue})`;
+      case "person":
+        return `(siła: ${cardValue})`;
+      default:
+        return "Nieznany typ karty";
+    }
+  };
+
   render() {
     console.log("render");
+    //console.log(this.state.deck);
     return (
       <div>
         <hr />
@@ -85,8 +101,12 @@ class Game extends React.Component {
               <p>Ludzie:</p>
               <ul>
                 {this.state.people.map((person, i) => {
-                  if (person.owner === this.state.players[j].name) {
-                    return <li key={i}>Person</li>;
+                  if (person.owner === j) {
+                    return (
+                      <li key={i}>
+                        {i + 1} {person.name}
+                      </li>
+                    );
                   }
                 })}
               </ul>
@@ -96,7 +116,8 @@ class Game extends React.Component {
                   if (card.owner === j) {
                     return (
                       <li key={k}>
-                        {`${card.name.toString()} (żywność: +${card.value})`}
+                        {`${card.name.toString()} `}
+                        {this.renderCardType(card.type, card.value)}
                         {this.state.game.phase === 2 &&
                         this.state.game.currentPlayer === j &&
                         card.type === "food" ? (
