@@ -1,28 +1,19 @@
-import * as types from "./actionTypes";
-import shuffledDeck from "./../../game_data/deck";
+import types from "./actionTypes";
 
-export function nextPhase(phase) {
-  return {
-    type: types.NEXT_PHASE,
-    currentPhase: phase
-  };
-}
-
-export function loadDeckSuccess(initDeck) {
-  return {
-    type: types.INIT_GAME_SUCCESS,
-    initDeck: initDeck
-  };
-}
-
-export function initGame() {
-  return function(dispatch) {
-    return shuffledDeck
-      .then(initDeck => {
-        dispatch(loadDeckSuccess(initDeck));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
+export function nextPhase(phase, id) {
+  switch (phase) {
+    case 7: {
+      const nextPlayer = id === 0 ? 1 : 0;
+      return {
+        type: types.NEXT_PHASE,
+        currentPhase: 1,
+        currentPlayer: nextPlayer
+      };
+    }
+    default:
+      return {
+        type: types.NEXT_PHASE,
+        currentPhase: phase + 1
+      };
+  }
 }

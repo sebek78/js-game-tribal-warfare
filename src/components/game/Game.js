@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as gameActions from "../../redux/actions/gameActions";
 import PropTypes from "prop-types";
 
-function Game(props) {
-  const [game, nextPhase] = useState({ phase: -1 });
+class Game extends React.Component {
+  state = {
+    game: {
+      phase: 0,
+      currentPlayer: 1
+    },
+    players: [{ name: "" }, { name: "" }]
+  };
 
-  useEffect(() => {
-    console.log(props.game);
-    if (props.game.phase === 0 && props.game.deck.length === 0) {
-      props.initGame();
-    }
-    nextPhase(props.game.phase);
-  }, [props.game]);
+  componentDidMount() {
+    const { game, players } = this.props;
+    this.setState({
+      game: game,
+      players
+    });
+  }
 
-  const renderSwitch = phase => {
-    switch (props.game.phase) {
-      case 0:
-        return "Start gry";
+  componentDidUpdate(prevProps) {
+    if (this.props.game !== prevProps.game)
+      this.setState({ game: this.props.game });
+  }
+
+  renderSwitch = () => {
+    switch (this.state.game.phase) {
       case 1:
         return "Losuj kartę";
       default:
@@ -25,56 +34,56 @@ function Game(props) {
     }
   };
 
-  return (
-    <div>
-      <hr />
-      <span>Faza gry {props.game.phase}</span>
-      <button
-        onClick={() => {
-          props.nextPhase(game);
-        }}
-      >
-        {renderSwitch(props.game.phase)}
-      </button>
-      <hr />
+  render() {
+    return (
       <div>
-        <p>Player: {props.game.players[0].name}</p>
-        <p>Hand:</p>
-        <ul>
-          {props.game.players[0].hand.map((card, i) => {
-            return <li key={i}>{card.toString()}</li>;
-          })}
-        </ul>
+        <hr />
+        <span>Faza gry {this.state.game.phase}</span>
+        {" | "}
+        <span>
+          Gracz: {this.state.players[this.state.game.currentPlayer].name}
+        </span>
+        {" | "}
+        <button
+          onClick={() => {
+            this.props.nextPhase(
+              this.state.game.phase,
+              this.state.game.currentPlayer
+            );
+          }}
+        >
+          {this.renderSwitch(this.state.game.phase)}
+        </button>
+        <hr />
+        <div>
+          <p>Player: {this.state.players[0].name} </p>
+          <p>Hand:</p>
+        </div>
+        <hr />
+        <div>
+          <p>Player: {this.state.players[1].name}</p>
+          <p>Hand:</p>
+        </div>
       </div>
-      <hr />
-      <div>
-        <p>Player: {props.game.players[1].name}</p>
-        <p>Hand:</p>
-        <ul>
-          {props.game.players[1].hand.map((card, i) => {
-            return <li key={i}>{card.toString()}</li>;
-          })}
-        </ul>
-      </div>
-    </div>
-  );
+    );
+  }
 }
-
 Game.propTypes = {
   game: PropTypes.object.isRequired,
   nextPhase: PropTypes.func.isRequired,
-  initGame: PropTypes.func.isRequired
+  players: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
-    game: state.game
+    game: state.game,
+    deck: state.deck,
+    players: state.players
   };
 }
 
 const mapDispatchToProps = {
-  nextPhase: gameActions.nextPhase,
-  initGame: gameActions.initGame
+  nextPhase: gameActions.nextPhase
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

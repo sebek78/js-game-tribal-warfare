@@ -1,2 +1,3 @@
-export const NEXT_PHASE = "NEXT_PHASE";
-export const INIT_GAME_SUCCESS = "INIT_GAME_SUCCESS";
+export default {
+  NEXT_PHASE: "NEXT_PHASE"
+};
