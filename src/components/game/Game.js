@@ -9,14 +9,17 @@ class Game extends React.Component {
       phase: 0,
       currentPlayer: 1
     },
-    players: [{ name: "" }, { name: "" }]
+    players: [{ name: "" }, { name: "" }],
+    people: []
   };
 
   componentDidMount() {
-    const { game, players } = this.props;
+    console.log(this.props);
+    const { game, players, people } = this.props;
     this.setState({
       game: game,
-      players
+      players,
+      people
     });
   }
 
@@ -55,14 +58,37 @@ class Game extends React.Component {
           {this.renderSwitch(this.state.game.phase)}
         </button>
         <hr />
-        <div>
-          <p>Player: {this.state.players[0].name} </p>
-          <p>Hand:</p>
+        <div className="playerView">
+          <p>
+            Gracz: {this.state.players[0].name}
+            <span style={{ marginLeft: 10 }}>
+              Żywność: {this.state.players[0].food}
+            </span>
+          </p>
+          <p>Ludzie:</p>
+          <ul>
+            {this.state.people.map((person, i) => {
+              if (person.owner === this.state.players[0].name) {
+                return <li key={i}>Person</li>;
+              }
+            })}
+          </ul>
         </div>
-        <hr />
-        <div>
-          <p>Player: {this.state.players[1].name}</p>
-          <p>Hand:</p>
+        <div className="playerView">
+          <p>
+            Gracz: {this.state.players[1].name}
+            <span style={{ marginLeft: 10 }}>
+              Żywność: {this.state.players[1].food}
+            </span>
+          </p>
+          <p>Ludzie:</p>
+          <ul>
+            {this.state.people.map((person, i) => {
+              if (person.owner === this.state.players[1].name) {
+                return <li key={i}>Person</li>;
+              }
+            })}
+          </ul>
         </div>
       </div>
     );
@@ -71,14 +97,16 @@ class Game extends React.Component {
 Game.propTypes = {
   game: PropTypes.object.isRequired,
   nextPhase: PropTypes.func.isRequired,
-  players: PropTypes.array
+  players: PropTypes.array,
+  people: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
     game: state.game,
     deck: state.deck,
-    players: state.players
+    players: state.players,
+    people: state.people
   };
 }
 
