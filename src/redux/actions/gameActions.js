@@ -11,7 +11,7 @@ export function nextPhase(phase, playerID) {
 
 export function changePhase(phase, id) {
   switch (phase) {
-    case 7: {
+    case 3: {
       const nextPlayer = id === 0 ? 1 : 0;
       return {
         type: types.NEXT_PHASE,

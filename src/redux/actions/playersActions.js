@@ -1,10 +1,9 @@
 import types from "./actionTypes";
 
-/*
-export function getPlayerName(id) {
+export function addFood(playerID, value) {
   return {
-    type: types.GET_PLAYER_NAME,
-    id: id
+    type: types.ADD_FOOD,
+    playerID,
+    value
   };
 }
-*/

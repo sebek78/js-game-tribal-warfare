@@ -9,6 +9,12 @@ export default function deckReducer(state = initialState.deck, action) {
       drawCard.owner = action.id;
       return state.map((card, i) => (cardIndex === i ? drawCard : card));
     }
+    case types.DISCARD_FOOD_CARD: {
+      const cardToDiscard = { ...state[action.cardID] };
+      return state.map(card =>
+        card.id === action.cardID ? cardToDiscard : card
+      );
+    }
     default:
       return state;
   }

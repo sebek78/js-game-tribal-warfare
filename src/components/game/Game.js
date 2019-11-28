@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as gameActions from "../../redux/actions/gameActions";
+import * as deckActions from "../../redux/actions/deckActions";
 import PropTypes from "prop-types";
 
 class Game extends React.Component {
@@ -25,17 +26,26 @@ class Game extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.game !== prevProps.game)
+    if (this.props.game !== prevProps.game) {
+      console.log("update game");
       this.setState({ game: this.props.game });
-    if (this.props.deck !== prevProps.deck)
+    }
+    if (this.props.deck !== prevProps.deck) {
+      console.log("update deck");
       this.setState({ deck: this.props.deck });
-    console.log("update");
+    }
+    if (this.props.players !== prevProps.players) {
+      console.log("update players");
+      this.setState({ players: this.props.players });
+    }
   }
 
   renderSwitch = () => {
     switch (this.state.game.phase) {
       case 1:
         return "Losuj kartę";
+      case 2:
+        return "Polowanie i zbieranie";
       default:
         return "Następna faza";
     }
@@ -63,54 +73,51 @@ class Game extends React.Component {
           {this.renderSwitch(this.state.game.phase)}
         </button>
         <hr />
-        <div className="playerView">
-          <p>
-            Gracz: {this.state.players[0].name}
-            <span style={{ marginLeft: 10 }}>
-              Żywność: {this.state.players[0].food}
-            </span>
-          </p>
-          <p>Ludzie:</p>
-          <ul>
-            {this.state.people.map((person, i) => {
-              if (person.owner === this.state.players[0].name) {
-                return <li key={i}>Person</li>;
-              }
-            })}
-          </ul>
-          <p>Karty</p>
-          <ul>
-            {this.state.deck.map((card, i) => {
-              if (card.owner === 0) {
-                return <li key={i}>{card.name.toString()}</li>;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="playerView">
-          <p>
-            Gracz: {this.state.players[1].name}
-            <span style={{ marginLeft: 10 }}>
-              Żywność: {this.state.players[1].food}
-            </span>
-          </p>
-          <p>Ludzie:</p>
-          <ul>
-            {this.state.people.map((person, i) => {
-              if (person.owner === this.state.players[1].name) {
-                return <li key={i}>Person</li>;
-              }
-            })}
-          </ul>
-          <p>Karty</p>
-          <ul>
-            {this.state.deck.map((card, i) => {
-              if (card.owner === 1) {
-                return <li key={i}>{card.name.toString()}</li>;
-              }
-            })}
-          </ul>
-        </div>
+        {this.state.players.map((player, j) => {
+          return (
+            <div key={j} className="playerView">
+              <p>
+                Gracz: {this.state.players[j].name}
+                <span style={{ marginLeft: 10 }}>
+                  Żywność: {this.state.players[j].food}
+                </span>
+              </p>
+              <p>Ludzie:</p>
+              <ul>
+                {this.state.people.map((person, i) => {
+                  if (person.owner === this.state.players[j].name) {
+                    return <li key={i}>Person</li>;
+                  }
+                })}
+              </ul>
+              <p>Karty</p>
+              <ul>
+                {this.state.deck.map((card, k) => {
+                  if (card.owner === j) {
+                    return (
+                      <li key={k}>
+                        {`${card.name.toString()} (żywność: +${card.value})`}
+                        {this.state.game.phase === 2 &&
+                        this.state.game.currentPlayer === j &&
+                        card.type === "food" ? (
+                          <button
+                            onClick={() =>
+                              this.props.gainFood(card.id, card.value, j)
+                            }
+                          >
+                            Zagraj
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -118,6 +125,7 @@ class Game extends React.Component {
 Game.propTypes = {
   game: PropTypes.object.isRequired,
   nextPhase: PropTypes.func.isRequired,
+  gainFood: PropTypes.func.isRequired,
   players: PropTypes.array,
   people: PropTypes.array,
   deck: PropTypes.array
@@ -133,7 +141,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  nextPhase: gameActions.nextPhase
+  nextPhase: gameActions.nextPhase,
+  gainFood: deckActions.gainFood
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
