@@ -1,6 +1,8 @@
-# The Short Notes Notebook
+# Wojna Plemienna
 
-This is a simple card game for two players. Each player controls a primal tribe. The goal of the game is to eliminate the concurrency tribe from this valley.
+## A simple card game for two players
+
+Each player controls a primal tribe. The goal of the game is to eliminate the concurrency tribe from this valley.
 
 This game is inspired by other card games but is not a clone or remake of any other game.
 

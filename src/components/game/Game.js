@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as gameActions from "../../redux/actions/gameActions";
 import * as deckActions from "../../redux/actions/deckActions";
 import PropTypes from "prop-types";
+import Header from "./../common/Header";
 
 class Game extends React.Component {
   state = {
@@ -71,6 +72,7 @@ class Game extends React.Component {
     //console.log(this.state.deck);
     return (
       <div>
+        <Header />
         <hr />
         <span>Faza gry {this.state.game.phase}</span>
         {" | "}

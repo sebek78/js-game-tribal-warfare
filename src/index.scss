@@ -1,0 +1,15 @@
+@import "./scss/variables";
+@import "./components/home/homePage";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $bcg-color;
+  color: $font-color;
+  font-family: $regular-font;
+  font-size: $medium-font;
+}
