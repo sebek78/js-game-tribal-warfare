@@ -1,0 +1,32 @@
+.card {
+  border: $border-thin-primary;
+  width: 128px;
+  height: 188px;
+  margin: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: $bcg-card-color;
+  .card__name {
+    @include flex-center;
+    height: 40px;
+    line-height: 16px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: $border-thin-primary;
+  }
+  .card__image {
+    height: 126px;
+    @include flex-center;
+    .TEST-image {
+      width: 110px;
+      height: 110px;
+      outline: 1px dashed gray;
+      margin: 2px auto;
+    }
+  }
+  .card__value {
+    border-top: $border-thin-primary;
+    line-height: 20px;
+  }
+}

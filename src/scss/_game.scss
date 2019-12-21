@@ -1,0 +1,57 @@
+.TEST-temp {
+  outline: 1px dashed red;
+  margin: 5px;
+  width: 110px;
+  display: inline-block;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .game__message-box {
+    text-align: center;
+    height: 40px;
+  }
+  .game__table {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    outline: 1px dashed red;
+    margin: 5px;
+  }
+  .game__playerView {
+    outline: 1px dashed green;
+    margin: 5px;
+    //flex-grow: 1;
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+  }
+  .game__playerInfo {
+    width: 95%;
+    height: 30px;
+    outline: 1px dashed orange;
+    text-align: center;
+    margin: 5px;
+  }
+  .playerView__cards {
+    //flex-grow: 1;
+    outline: 1px dashed purple;
+    margin: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    //align-items: flex-start;
+  }
+  .playerView__label {
+    width: 95%;
+    outline: 1px dashed orange;
+    margin: 5px;
+  }
+  .playerView__hand {
+    margin: 5px;
+    outline: 1px dashed purple;
+  }
+}

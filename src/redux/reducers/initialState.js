@@ -17,9 +17,10 @@ initialState.deck = shuffledDeck;
 
 export const person = {
   name: "Plemienny",
+  type: "person",
   owner: null,
   prisoner: false,
-  strength: 1,
+  value: 1,
   meleeWeapon: null,
   rangedWeapon: null
 };

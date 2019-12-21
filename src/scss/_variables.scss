@@ -12,14 +12,4 @@ $big-font: 24px;
 $higher-font: 18px;
 $medium-font: 16px;
 
-.text__link,
-.text__link:visited {
-  color: $secondary-color;
-  font-size: $higher-font;
-  text-decoration: none;
-}
-.text__link:hover,
-.text__link:active {
-  color: $primary-color;
-  text-decoration: underline;
-}
+$border-thin-primary: 1px solid $primary-color;

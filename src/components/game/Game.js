@@ -4,6 +4,7 @@ import * as gameActions from "../../redux/actions/gameActions";
 import * as deckActions from "../../redux/actions/deckActions";
 import PropTypes from "prop-types";
 import Header from "./../common/Header";
+import Card from "./Card";
 
 class Game extends React.Component {
   state = {
@@ -56,91 +57,78 @@ class Game extends React.Component {
     }
   };
 
-  renderCardType = (cardType, cardValue) => {
-    switch (cardType) {
-      case "food":
-        return `(żywność: +${cardValue})`;
-      case "person":
-        return `(siła: ${cardValue})`;
-      default:
-        return "Nieznany typ karty";
-    }
-  };
-
   render() {
     console.log("render");
     //console.log(this.state.deck);
     return (
-      <div>
+      <div className="game">
         <Header />
-        <hr />
-        <span>Faza gry {this.state.game.phase}</span>
-        {" | "}
-        <span>
-          Gracz: {this.state.players[this.state.game.currentPlayer].name}
-        </span>
-        {" | "}
-        <button
-          onClick={() => {
-            this.props.nextPhase(
-              this.state.game.phase,
-              this.state.game.currentPlayer
+        <div className="game__message-box">
+          <span>Faza gry {this.state.game.phase}</span>
+          {" | "}
+          <span>
+            Gracz: {this.state.players[this.state.game.currentPlayer].name}
+          </span>
+          {" | "}
+          <button
+            onClick={() => {
+              this.props.nextPhase(
+                this.state.game.phase,
+                this.state.game.currentPlayer
+              );
+            }}
+          >
+            {this.renderSwitch(this.state.game.phase)}
+          </button>
+        </div>
+        <div className="game__table">
+          {this.state.players.map((player, j) => {
+            return (
+              <div key={j} className="game__playerView">
+                <div className="game__playerInfo">
+                  Gracz: {this.state.players[j].name}
+                  <span style={{ marginLeft: 10 }}>
+                    Żywność: {this.state.players[j].food}
+                  </span>
+                </div>
+                <p className="playerView__label">Karty</p>
+                <div className="playerView__hand">
+                  {this.state.deck.map((card, k) => {
+                    let key2 = k + 1000;
+                    if (card.owner === j) {
+                      return (
+                        <div className="TEST-temp" key={k}>
+                          <Card data={card} />
+                          {this.state.game.phase === 2 &&
+                          this.state.game.currentPlayer === j &&
+                          card.type === "food" ? (
+                            <button
+                              key={key2}
+                              onClick={() =>
+                                this.props.gainFood(card.id, card.value, j)
+                              }
+                            >
+                              Zagraj
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+                <div className="playerView__cards">
+                  {this.state.people.map((person, i) => {
+                    if (person.owner === j) {
+                      return <Card key={i} data={person} />;
+                    }
+                  })}
+                </div>
+              </div>
             );
-          }}
-        >
-          {this.renderSwitch(this.state.game.phase)}
-        </button>
-        <hr />
-        {this.state.players.map((player, j) => {
-          return (
-            <div key={j} className="playerView">
-              <p>
-                Gracz: {this.state.players[j].name}
-                <span style={{ marginLeft: 10 }}>
-                  Żywność: {this.state.players[j].food}
-                </span>
-              </p>
-              <p>Ludzie:</p>
-              <ul>
-                {this.state.people.map((person, i) => {
-                  if (person.owner === j) {
-                    return (
-                      <li key={i}>
-                        {i + 1} {person.name}
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
-              <p>Karty</p>
-              <ul>
-                {this.state.deck.map((card, k) => {
-                  if (card.owner === j) {
-                    return (
-                      <li key={k}>
-                        {`${card.name.toString()} `}
-                        {this.renderCardType(card.type, card.value)}
-                        {this.state.game.phase === 2 &&
-                        this.state.game.currentPlayer === j &&
-                        card.type === "food" ? (
-                          <button
-                            onClick={() =>
-                              this.props.gainFood(card.id, card.value, j)
-                            }
-                          >
-                            Zagraj
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
-            </div>
-          );
-        })}
+          })}
+        </div>
       </div>
     );
   }
