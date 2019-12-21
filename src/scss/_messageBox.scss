@@ -1,0 +1,36 @@
+.message-box {
+  flex-shrink: 0;
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: $border-font-color;
+  font-size: $big-font;
+  color: $primary-color;
+  font-family: $fancy-font;
+
+  .message-box__player-info {
+    display: block;
+    margin-left: 20px;
+  }
+  .message-box__text {
+    font-family: $higher-font;
+    margin: 0 auto;
+  }
+  .message-box__button {
+    background-color: $primary-color;
+    color: $bcg-card-color;
+    border: 0;
+    border-radius: 8px;
+    padding: 5px 12px;
+    text-align: center;
+    font-size: $higher-font;
+    font-family: $fancy-font;
+    letter-spacing: 3px;
+    margin-right: 20px;
+    &:hover {
+      background-color: $secondary-color;
+      color: $bcg-color;
+    }
+  }
+}

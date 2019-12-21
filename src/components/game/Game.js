@@ -5,12 +5,15 @@ import * as deckActions from "../../redux/actions/deckActions";
 import PropTypes from "prop-types";
 import Header from "./../common/Header";
 import Card from "./Card";
+import MessageBox from "./MessageBox";
 
 class Game extends React.Component {
   state = {
     game: {
       phase: 0,
-      currentPlayer: 1
+      currentPlayer: 1,
+      gameOver: false,
+      winner: null
     },
     players: [{ name: "" }, { name: "" }],
     people: [],
@@ -46,45 +49,17 @@ class Game extends React.Component {
     }
   }
 
-  renderSwitch = () => {
-    switch (this.state.game.phase) {
-      case 1:
-        return "Nowe zasoby - Losuj kartę";
-      case 2:
-        return "Polowanie i zbieranie - Zagraj kartę żywności";
-      case 4:
-        return "Nowi ludzie w osadzie";
-      case 5:
-        return "Główny posiłek dnia (konsumowanie żywności)";
-      default:
-        return "Następna faza";
-    }
-  };
-
   render() {
     // console.log("render");
     //console.log(this.state.deck);
     return (
       <div className="game">
         <Header />
-        <div className="game__message-box">
-          <span>Faza gry {this.state.game.phase}</span>
-          {" | "}
-          <span>
-            Gracz: {this.state.players[this.state.game.currentPlayer].name}
-          </span>
-          {" | "}
-          <button
-            onClick={() => {
-              this.props.nextPhase(
-                this.state.game.phase,
-                this.state.game.currentPlayer
-              );
-            }}
-          >
-            {this.renderSwitch(this.state.game.phase)}
-          </button>
-        </div>
+        <MessageBox
+          game={this.state.game}
+          players={this.state.players}
+          nextPhase={this.props.nextPhase}
+        />
         <div className="game__table">
           {this.state.players.map((player, j) => {
             return (

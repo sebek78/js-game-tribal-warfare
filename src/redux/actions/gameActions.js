@@ -15,14 +15,29 @@ export function nextPhase(phase, playerID) {
       }, 0);
       dispatch(consumeFood(playerID, peopleNum));
     }
-
+    if (phase === 8) {
+      const people = getState().people;
+      const names = getState().players.map(player => player.name);
+      const player1pts = people.reduce((prevValue, person) => {
+        if (person.owner === 0) return (prevValue += 1);
+        else return prevValue;
+      }, 0);
+      const player2pts = people.reduce((prevValue, person) => {
+        if (person.owner === 1) return (prevValue += 1);
+        else return prevValue;
+      }, 0);
+      const gameOver = checkWinConditions(player1pts, player2pts, names);
+      if (gameOver !== null) {
+        dispatch(setGameOver(gameOver));
+      }
+    }
     return dispatch(changePhase(phase, playerID));
   };
 }
 
-export function changePhase(phase, id) {
+function changePhase(phase, id) {
   switch (phase) {
-    case 5: {
+    case 8: {
       const nextPlayer = id === 0 ? 1 : 0;
       return {
         type: types.NEXT_PHASE,
@@ -36,4 +51,28 @@ export function changePhase(phase, id) {
         currentPhase: phase + 1
       };
   }
+}
+
+function checkWinConditions(p1, p2, names) {
+  let winner = "";
+  if (p1 >= 30 || p2 <= 0) {
+    winner = names[0];
+  } else if (p2 >= 30 || p1 <= 0) {
+    winner = names[1];
+  } else {
+    return null;
+  }
+  return {
+    gameOver: true,
+    winner
+  };
+}
+
+function setGameOver({ gameOver, winner }) {
+  console.log(gameOver, winner);
+  return {
+    type: types.CHECK_END_GAME_CONDITIONS,
+    gameOver,
+    winner
+  };
 }

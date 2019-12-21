@@ -1,6 +1,7 @@
 export default {
   // game action types
   NEXT_PHASE: "NEXT_PHASE",
+  CHECK_END_GAME_CONDITIONS: "CHECK_END_GAME_CONDITIONS",
 
   // deck action types
   DRAW_CARD: "DRAW_CARD",

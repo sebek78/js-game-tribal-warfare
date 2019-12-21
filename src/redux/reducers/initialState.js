@@ -3,7 +3,9 @@ import shuffledDeck from "./../../game_data/deck";
 let initialState = {
   game: {
     phase: 1,
-    currentPlayer: 0
+    currentPlayer: 0,
+    gameOver: false,
+    winner: null
   },
   players: [
     { name: "A", food: 2 },

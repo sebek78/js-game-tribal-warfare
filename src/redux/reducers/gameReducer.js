@@ -16,7 +16,12 @@ export default function gameReducer(state = initialState.game, action) {
           currentPlayer: action.currentPlayer
         };
       }
-
+    case types.CHECK_END_GAME_CONDITIONS:
+      return {
+        ...state,
+        gameOver: action.gameOver,
+        winner: action.winner
+      };
     default:
       return state;
   }
