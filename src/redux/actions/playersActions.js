@@ -7,3 +7,10 @@ export function addFood(playerID, value) {
     value
   };
 }
+export function consumeFood(playerID, peopleNum) {
+  return {
+    type: types.CONSUME_FOOD,
+    playerID,
+    peopleNum
+  };
+}

@@ -8,6 +8,7 @@ export default {
 
   // player action types
   ADD_FOOD: "ADD_FOOD",
+  CONSUME_FOOD: "CONSUME_FOOD",
 
   // people action types
   ADD_NEW_COMMON_PERSON: "ADD_NEW_COMMON_PERSON",

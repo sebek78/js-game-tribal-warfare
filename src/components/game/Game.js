@@ -29,19 +29,19 @@ class Game extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.game !== prevProps.game) {
-      console.log("update game");
+      // console.log("update game");
       this.setState({ game: this.props.game });
     }
     if (this.props.deck !== prevProps.deck) {
-      console.log("update deck");
+      // console.log("update deck");
       this.setState({ deck: this.props.deck });
     }
     if (this.props.players !== prevProps.players) {
-      console.log("update players");
+      // console.log("update players");
       this.setState({ players: this.props.players });
     }
     if (this.props.people !== prevProps.people) {
-      console.log("update people");
+      // console.log("update people");
       this.setState({ people: this.props.people });
     }
   }
@@ -49,16 +49,20 @@ class Game extends React.Component {
   renderSwitch = () => {
     switch (this.state.game.phase) {
       case 1:
-        return "Losuj kartę";
+        return "Nowe zasoby - Losuj kartę";
       case 2:
-        return "Polowanie i zbieranie";
+        return "Polowanie i zbieranie - Zagraj kartę żywności";
+      case 4:
+        return "Nowi ludzie w osadzie";
+      case 5:
+        return "Główny posiłek dnia (konsumowanie żywności)";
       default:
         return "Następna faza";
     }
   };
 
   render() {
-    console.log("render");
+    // console.log("render");
     //console.log(this.state.deck);
     return (
       <div className="game">
