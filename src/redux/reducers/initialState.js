@@ -1,5 +1,8 @@
 import shuffledDeck from "./../../game_data/deck";
 
+const INIT_PEOPLE = 16; // each player starts with 10 people,
+const INIT_FOOD_UNITS = 2; // each player starts with two units of food
+
 let initialState = {
   game: {
     phase: 1,
@@ -8,8 +11,8 @@ let initialState = {
     winner: null
   },
   players: [
-    { name: "A", food: 2 },
-    { name: "B", food: 2 }
+    { name: "A", food: INIT_FOOD_UNITS },
+    { name: "B", food: INIT_FOOD_UNITS }
   ],
   deck: [],
   people: []
@@ -28,7 +31,7 @@ export const person = {
 };
 let people = [];
 initialState.players.forEach((player, id) => {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < INIT_PEOPLE; i++) {
     const newPerson = { ...person, owner: id };
     people.push(newPerson);
   }
