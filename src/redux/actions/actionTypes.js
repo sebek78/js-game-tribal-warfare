@@ -2,6 +2,7 @@ export default {
   // game action types
   NEXT_PHASE: "NEXT_PHASE",
   CHECK_END_GAME_CONDITIONS: "CHECK_END_GAME_CONDITIONS",
+  SET_CARD_LIMIT_FLAG: "SET_CARD_LIMIT_FLAG",
 
   // deck action types
   DRAW_CARD: "DRAW_CARD",

@@ -24,6 +24,11 @@
       outline: 1px dashed gray;
       margin: 2px auto;
     }
+    .card__png {
+      width: 110px;
+      height: 110px;
+      margin: 2px auto;
+    }
   }
   .card__value {
     border-top: $border-thin-primary;

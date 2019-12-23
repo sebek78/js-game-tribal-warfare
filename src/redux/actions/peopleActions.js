@@ -14,7 +14,7 @@ export function addNewPersons(playerID) {
       });
       return dispatch(playPersonCard(playerID, playerPersonsCards));
     } else {
-      console.log("Phase 3: no card to move");
+      // console.log("Phase 3: no card to move");
       return;
     }
   };

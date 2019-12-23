@@ -13,7 +13,8 @@ class Game extends React.Component {
       phase: 0,
       currentPlayer: 1,
       gameOver: false,
-      winner: null
+      winner: null,
+      cardLimit: false
     },
     players: [{ name: "" }, { name: "" }],
     people: [],
@@ -51,7 +52,7 @@ class Game extends React.Component {
 
   render() {
     // console.log("render");
-    //console.log(this.state.deck);
+    // console.log(this.state.deck);
     return (
       <div className="game">
         <Header />
@@ -59,6 +60,7 @@ class Game extends React.Component {
           game={this.state.game}
           players={this.state.players}
           nextPhase={this.props.nextPhase}
+          deck={this.state.deck}
         />
         <div className="game__table">
           {this.state.players.map((player, j) => {
@@ -73,34 +75,29 @@ class Game extends React.Component {
                 <p className="playerView__label">Karty</p>
                 <div className="playerView__hand">
                   {this.state.deck.map((card, k) => {
-                    let key2 = k + 1000;
-                    if (card.owner === j) {
-                      return (
-                        <div className="TEST-temp" key={k}>
-                          <Card data={card} />
-                          {this.state.game.phase === 2 &&
-                          this.state.game.currentPlayer === j &&
-                          card.type === "food" ? (
-                            <button
-                              key={key2}
-                              onClick={() =>
-                                this.props.gainFood(card.id, card.value, j)
-                              }
-                            >
-                              Zagraj
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      );
-                    }
+                    return card.owner === j ? (
+                      <Card
+                        key={k}
+                        card={card}
+                        phase={this.state.game.phase}
+                        currentPlayer={j}
+                        {...(this.state.game.phase === 1 &&
+                          this.state.game.cardLimit &&
+                          this.state.game.currentPlayer === j && {
+                            discardCard: this.props.discardCard
+                          })}
+                        {...(this.state.game.phase === 2 &&
+                          this.state.game.currentPlayer === j && {
+                            gainFood: this.props.gainFood
+                          })}
+                      />
+                    ) : null;
                   })}
                 </div>
                 <div className="playerView__cards">
-                  {this.state.people.map((person, i) => {
-                    if (person.owner === j) {
-                      return <Card key={i} data={person} />;
+                  {this.state.people.map((card, i) => {
+                    if (card.owner === j) {
+                      return <Card key={i} card={card} />;
                     }
                   })}
                 </div>
@@ -116,6 +113,7 @@ Game.propTypes = {
   game: PropTypes.object.isRequired,
   nextPhase: PropTypes.func.isRequired,
   gainFood: PropTypes.func.isRequired,
+  discardCard: PropTypes.func.isRequired,
   players: PropTypes.array,
   people: PropTypes.array,
   deck: PropTypes.array
@@ -132,7 +130,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   nextPhase: gameActions.nextPhase,
-  gainFood: deckActions.gainFood
+  gainFood: deckActions.gainFood,
+  discardCard: deckActions.discardCard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

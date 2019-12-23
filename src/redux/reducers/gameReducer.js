@@ -22,6 +22,11 @@ export default function gameReducer(state = initialState.game, action) {
         gameOver: action.gameOver,
         winner: action.winner
       };
+    case types.SET_CARD_LIMIT_FLAG:
+      return {
+        ...state,
+        cardLimit: action.value
+      };
     default:
       return state;
   }

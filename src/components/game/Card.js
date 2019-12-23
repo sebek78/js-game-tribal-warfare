@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import personImg from "./../../img/kr-person1.png";
 
-const Card = ({ data }) => {
-  useEffect(() => {
-    //console.log(data);
-  }, []);
+const Card = props => {
+  const { card, phase, currentPlayer } = props;
+  const { gainFood, discardCard } = props;
 
   const renderCardType = cardType => {
     switch (cardType) {
@@ -17,23 +17,56 @@ const Card = ({ data }) => {
     }
   };
 
+  const renderButton = (card, phase, currentPlayer) => {
+    if (phase !== undefined) {
+      if (phase === 1 && discardCard !== undefined) {
+        return (
+          <button onClick={() => discardCard(card.id)}>Wyrzuć kartę</button>
+        );
+      } else if (
+        card.type === "food" &&
+        phase === 2 &&
+        gainFood !== undefined
+      ) {
+        return (
+          <button
+            onClick={() => gainFood(card.id, card.value, phase, currentPlayer)}
+          >
+            Zagraj
+          </button>
+        );
+      } else {
+        return null;
+      }
+    }
+  };
+
   return (
     <div className="card">
       <div className="card__name">
-        <div>{data.name}</div>
+        <div>{card.name}</div>
       </div>
+      {renderButton(card, phase, currentPlayer)}
       <div className="card__image">
-        <div className="TEST-image"></div>
+        {card.type === "person" ? (
+          <img className="card__png" src={personImg} />
+        ) : (
+          <div className="TEST-image"></div>
+        )}
       </div>
-      <div className="card__value">{`${renderCardType(data.type)}${
-        data.value
+      <div className="card__value">{`${renderCardType(card.type)}${
+        card.value
       }`}</div>
     </div>
   );
 };
 
 Card.propTypes = {
-  data: PropTypes.object.isRequired
+  card: PropTypes.object.isRequired,
+  phase: PropTypes.number,
+  currentPlayer: PropTypes.number,
+  gainFood: PropTypes.func,
+  discardCard: PropTypes.func
 };
 
 export default Card;

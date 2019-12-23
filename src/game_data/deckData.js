@@ -11,7 +11,7 @@ const deckData = [
   { name: "Polowanie z siecią", type: "food", number: 2, value: 6 },
   { name: "Wielki łoś", type: "food", number: 2, value: 5 },
   { name: "Wielki dzik", type: "food", number: 2, value: 5 },
-  { name: "Zabicie drapieznika", type: "food", number: 2, value: 5 },
+  { name: "Zabicie drapieżnika", type: "food", number: 2, value: 5 },
   { name: "Żubry", type: "food", number: 2, value: 5 },
   { name: "Wyprawa myśliwska", type: "food", number: 2, value: 4 },
   { name: "Jeleń", type: "food", number: 2, value: 4 },

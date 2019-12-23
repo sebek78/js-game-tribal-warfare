@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { CARD_LIMIT } from "./../../game_data/constants";
 
 const MessageBox = props => {
-  const { game, players, nextPhase } = props;
+  const { game, players, nextPhase, deck } = props;
   const [btnText, setBtnText] = useState("");
   const [message, setMessage] = useState("");
+  const [showBtn, setShowBtn] = useState(true);
 
   useEffect(() => {
-    renderSwitch(props.game.phase);
-  }, [props.game.phase]);
+    renderSwitch(game.phase);
+  }, [game.phase, deck]);
 
   const renderSwitch = phase => {
     switch (phase) {
       case 1:
-        setBtnText("Losuj");
-        setMessage("Nowe zasoby");
+        {
+          let cardsInHand = deck.reduce((prevValue, card) => {
+            if (card.owner === game.currentPlayer) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          if (cardsInHand <= CARD_LIMIT) {
+            setBtnText("Losuj");
+            setMessage("Nowe zasoby");
+            setShowBtn(true);
+          } else {
+            setMessage("Maksymalnie 5 kart w ręce. Wyrzuć dowolną kartę.");
+            setShowBtn(false);
+          }
+        }
         break;
-      case 2:
-        setBtnText("Zagraj kartę żywności");
-        setMessage("Polowanie i zbieranie");
+      case 2: {
+        let foodCardsInHand = deck.reduce((prevValue, card) => {
+          if (card.owner === game.currentPlayer && card.type === "food")
+            return (prevValue += 1);
+          else return prevValue;
+        }, 0);
+        if (!showBtn) setShowBtn(true);
+        if (foodCardsInHand === 0) {
+          setBtnText("Dalej");
+          setMessage("Niestety nic nie upolowano i nic nie znaleziono");
+        } else {
+          setMessage("Możesz zagrać nową kartą żywności");
+          setBtnText("Pomiń zdobycie jedzenia");
+        }
         break;
+      }
       case 3:
         setBtnText("następna tura");
         setMessage("(zdarzenia)");
@@ -61,7 +87,7 @@ const MessageBox = props => {
           <span>{message}</span>
         )}
       </div>
-      {game.gameOver ? null : (
+      {!game.gameOver && showBtn && (
         <button
           className="message-box__button"
           onClick={() => {
@@ -78,7 +104,8 @@ const MessageBox = props => {
 MessageBox.propTypes = {
   game: PropTypes.object.isRequired,
   players: PropTypes.array.isRequired,
-  nextPhase: PropTypes.func.isRequired
+  nextPhase: PropTypes.func.isRequired,
+  deck: PropTypes.array.isRequired
 };
 
 export default MessageBox;

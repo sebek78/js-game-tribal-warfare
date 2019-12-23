@@ -1,7 +1,6 @@
 import types from "./../actions/actionTypes";
 import initialState from "./initialState";
-
-const FOOD_NEEDS = 10; //one food unit for 10 people
+import { FOOD_NEEDS } from "./../../game_data/constants";
 
 export default function playersReducer(state = initialState.players, action) {
   switch (action.type) {

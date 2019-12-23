@@ -2,40 +2,82 @@ import types from "./actionTypes";
 import { drawCard } from "./deckActions";
 import { addNewPersons } from "./peopleActions";
 import { consumeFood } from "./playersActions";
+import { CARD_LIMIT } from "./../../game_data/constants";
 
 export function nextPhase(phase, playerID) {
   return function(dispatch, getState) {
-    if (phase === 1) dispatch(drawCard(playerID));
-    if (phase === 4) dispatch(addNewPersons(playerID));
-    if (phase === 5) {
-      const people = getState().people;
-      const peopleNum = people.reduce((prevValue, person) => {
-        if (person.owner === playerID) return (prevValue += 1);
-        else return prevValue;
-      }, 0);
-      dispatch(consumeFood(playerID, peopleNum));
-    }
-    if (phase === 8) {
-      const people = getState().people;
-      const names = getState().players.map(player => player.name);
-      const player1pts = people.reduce((prevValue, person) => {
-        if (person.owner === 0) return (prevValue += 1);
-        else return prevValue;
-      }, 0);
-      const player2pts = people.reduce((prevValue, person) => {
-        if (person.owner === 1) return (prevValue += 1);
-        else return prevValue;
-      }, 0);
-      const gameOver = checkWinConditions(player1pts, player2pts, names);
-      if (gameOver !== null) {
-        dispatch(setGameOver(gameOver));
+    switch (phase) {
+      case 1:
+        {
+          let cardsInHand = getState().deck.reduce((prevValue, card) => {
+            if (card.owner === playerID) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          if (cardsInHand <= CARD_LIMIT) {
+            dispatch(drawCard(playerID));
+          } else {
+            dispatch(setCardLimitFlag(true));
+          }
+          cardsInHand = getState().deck.reduce((prevValue, card) => {
+            if (card.owner === playerID) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          if (cardsInHand <= CARD_LIMIT) {
+            dispatch(changePhase(phase, playerID));
+          } else {
+            dispatch(setCardLimitFlag(true));
+          }
+        }
+        break;
+      case 2: {
+        return dispatch(changePhase(phase, playerID));
       }
+      case 4:
+        dispatch(addNewPersons(playerID));
+        return dispatch(changePhase(phase, playerID));
+      case 5:
+        {
+          const people = getState().people;
+          const peopleNum = people.reduce((prevValue, person) => {
+            if (person.owner === playerID) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          dispatch(consumeFood(playerID, peopleNum));
+        }
+        return dispatch(changePhase(phase, playerID));
+      case 8: {
+        if (phase === 8) {
+          const people = getState().people;
+          const names = getState().players.map(player => player.name);
+          const player1pts = people.reduce((prevValue, person) => {
+            if (person.owner === 0) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          const player2pts = people.reduce((prevValue, person) => {
+            if (person.owner === 1) return (prevValue += 1);
+            else return prevValue;
+          }, 0);
+          const gameOver = checkWinConditions(player1pts, player2pts, names);
+          if (gameOver !== null) {
+            dispatch(setGameOver(gameOver));
+          }
+        }
+        return dispatch(changePhase(phase, playerID));
+      }
+      default:
+        return dispatch(changePhase(phase, playerID));
     }
-    return dispatch(changePhase(phase, playerID));
   };
 }
 
-function changePhase(phase, id) {
+export function setCardLimitFlag(bool) {
+  return {
+    type: types.SET_CARD_LIMIT_FLAG,
+    value: bool
+  };
+}
+
+export function changePhase(phase, id) {
   switch (phase) {
     case 8: {
       const nextPlayer = id === 0 ? 1 : 0;

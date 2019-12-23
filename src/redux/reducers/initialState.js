@@ -1,14 +1,13 @@
 import shuffledDeck from "./../../game_data/deck";
-
-const INIT_PEOPLE = 16; // each player starts with 10 people,
-const INIT_FOOD_UNITS = 2; // each player starts with two units of food
+import { INIT_PEOPLE, INIT_FOOD_UNITS } from "./../../game_data/constants";
 
 let initialState = {
   game: {
     phase: 1,
     currentPlayer: 0,
     gameOver: false,
-    winner: null
+    winner: null,
+    cardLimit: false
   },
   players: [
     { name: "A", food: INIT_FOOD_UNITS },

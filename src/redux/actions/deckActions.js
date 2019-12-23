@@ -1,7 +1,7 @@
 import types from "./actionTypes";
 import { addFood } from "./playersActions";
-
-const EXTRA_CARD_LIMIT = 15; // a player with 15 or more people draw an extra card
+import { nextPhase, setCardLimitFlag, changePhase } from "./gameActions";
+import { EXTRA_CARD_LIMIT, CARD_LIMIT } from "./../../game_data/constants";
 
 export function drawCard(playerID) {
   return function(dispatch, getState) {
@@ -18,14 +18,36 @@ export function drawCard(playerID) {
   };
 }
 
-export function gainFood(cardID, cardValue, playerID) {
+export function gainFood(cardID, cardValue, phase, playerID) {
   return function(dispatch) {
     dispatch(discardCard(cardID));
-    return dispatch(addFood(playerID, cardValue));
+    dispatch(addFood(playerID, cardValue));
+    return dispatch(nextPhase(phase, playerID));
   };
 }
 
 export function discardCard(cardID) {
+  return function(dispatch, getState) {
+    const phase = getState().game.phase;
+    const limit = getState().game.cardLimit;
+    if (phase === 1 && limit) {
+      dispatch(discardOneCard(cardID));
+      const currentPlayer = getState().game.currentPlayer;
+      const cardsInHand = getState().deck.reduce((prevValue, card) => {
+        if (card.owner === currentPlayer) return (prevValue += 1);
+        else return prevValue;
+      }, 0);
+      if (cardsInHand <= CARD_LIMIT) {
+        dispatch(setCardLimitFlag(false));
+        dispatch(changePhase(phase, currentPlayer));
+      }
+    } else {
+      dispatch(discardOneCard(cardID));
+    }
+  };
+}
+
+function discardOneCard(cardID) {
   return {
     type: types.DISCARD_CARD,
     cardID
