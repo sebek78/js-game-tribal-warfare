@@ -21,7 +21,12 @@ const Card = props => {
     if (phase !== undefined) {
       if (phase === 1 && discardCard !== undefined) {
         return (
-          <button onClick={() => discardCard(card.id)}>Wyrzuć kartę</button>
+          <button
+            className="card__Btn card__Btn--discard"
+            onClick={() => discardCard(card.id)}
+          >
+            Wyrzuć kartę
+          </button>
         );
       } else if (
         card.type === "food" &&
@@ -30,6 +35,7 @@ const Card = props => {
       ) {
         return (
           <button
+            className="card__Btn card__Btn--play"
             onClick={() => gainFood(card.id, card.value, phase, currentPlayer)}
           >
             Zagraj
@@ -46,8 +52,8 @@ const Card = props => {
       <div className="card__name">
         <div>{card.name}</div>
       </div>
-      {renderButton(card, phase, currentPlayer)}
       <div className="card__image">
+        {renderButton(card, phase, currentPlayer)}
         {card.type === "person" ? (
           <img className="card__png" src={personImg} />
         ) : (

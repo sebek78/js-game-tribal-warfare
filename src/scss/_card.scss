@@ -2,11 +2,12 @@
   border: $border-thin-primary;
   width: 128px;
   height: 188px;
-  margin: 5px;
+  margin: 5px 0;
   text-align: center;
   display: flex;
   flex-direction: column;
-  background-color: $bcg-card-color;
+  background-color: $card-bg-color; // $bcg-card-color;
+  z-index: 2;
   .card__name {
     @include flex-center;
     height: 40px;
@@ -18,6 +19,7 @@
   .card__image {
     height: 126px;
     @include flex-center;
+    position: relative;
     .TEST-image {
       width: 110px;
       height: 110px;
@@ -29,7 +31,28 @@
       height: 110px;
       margin: 2px auto;
     }
+    .card__Btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $card-bg-color;
+      border: 0;
+      border-radius: 8px;
+      padding: 5px 12px;
+      text-align: center;
+      font-size: $higher-font;
+      font-family: $fancy-font;
+      letter-spacing: 3px;
+    }
+    .card__Btn--play {
+      background-color: $card-play-color;
+    }
+    .card__Btn--discard {
+      background-color: $card-discard-color;
+    }
   }
+
   .card__value {
     border-top: $border-thin-primary;
     line-height: 20px;

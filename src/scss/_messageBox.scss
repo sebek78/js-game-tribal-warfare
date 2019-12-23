@@ -6,6 +6,7 @@
   align-items: center;
   border-bottom: $border-font-color;
   font-size: $big-font;
+  background-color: $card-bg-color;
   color: $primary-color;
   font-family: $fancy-font;
 
@@ -19,7 +20,7 @@
   }
   .message-box__button {
     background-color: $primary-color;
-    color: $bcg-card-color;
+    color: $bg-color;
     border: 0;
     border-radius: 8px;
     padding: 5px 12px;
@@ -30,7 +31,7 @@
     margin-right: 20px;
     &:hover {
       background-color: $secondary-color;
-      color: $bcg-color;
+      color: $bg-color;
     }
   }
 }

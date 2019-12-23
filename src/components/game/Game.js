@@ -66,14 +66,8 @@ class Game extends React.Component {
           {this.state.players.map((player, j) => {
             return (
               <div key={j} className="game__playerView">
-                <div className="game__playerInfo">
-                  Gracz: {this.state.players[j].name}
-                  <span style={{ marginLeft: 10 }}>
-                    Żywność: {this.state.players[j].food}
-                  </span>
-                </div>
-                <p className="playerView__label">Karty</p>
                 <div className="playerView__hand">
+                  <div className="playerView__desc">{`Karty gracza ${this.state.players[j].name}`}</div>
                   {this.state.deck.map((card, k) => {
                     return card.owner === j ? (
                       <Card
@@ -93,6 +87,9 @@ class Game extends React.Component {
                       />
                     ) : null;
                   })}
+                </div>
+                <div className="game__playerInfo">
+                  {`Wioska ${this.state.players[j].name} Żywność: ${this.state.players[j].food}`}
                 </div>
                 <div className="playerView__cards">
                   {this.state.people.map((card, i) => {
