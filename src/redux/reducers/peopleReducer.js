@@ -14,9 +14,14 @@ export default function peopleReducer(state = initialState.people, action) {
         let cardCopy = { ...card };
         cardsToAdd.push(cardCopy);
       });
-      return state.concat(cardsToAdd);
+      let newState = state.concat(cardsToAdd);
+      newState.sort(compareStr);
+      return newState;
     }
     default:
-      return state;
+      return state.sort(compareStr);
   }
 }
+
+// sort people card by strength
+const compareStr = (a, b) => b.value - a.value;
