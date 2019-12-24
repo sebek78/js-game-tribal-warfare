@@ -2,18 +2,18 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
-import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
-import GameView from "./game/GameView";
+import Game from "./game/Game";
+import ManualPage from "./manual/ManualPage";
 
 function App() {
   return (
     <div>
-      <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/game" component={GameView} />
+        <Route path="/game" component={Game} />
+        <Route path="/manual" component={ManualPage} />
         <Route component={PageNotFound} />
       </Switch>
     </div>

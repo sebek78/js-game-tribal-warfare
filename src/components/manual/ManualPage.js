@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "./../common/Header";
+//import { NavLink } from "react-router-dom";
 
-const AboutPage = () => {
+const ManualPage = () => {
   return (
     <div>
       <Header />
-      <h1>About</h1>
+      <p>Manual</p>
     </div>
   );
 };
 
-export default AboutPage;
+export default ManualPage;
