@@ -27,6 +27,13 @@ export default function gameReducer(state = initialState.game, action) {
         ...state,
         cardLimit: action.value
       };
+    case types.INCREASE_CARD_ID: {
+      const newId = state.cardId + 1;
+      return {
+        ...state,
+        cardId: newId
+      };
+    }
     default:
       return state;
   }

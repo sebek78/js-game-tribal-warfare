@@ -4,8 +4,8 @@ import * as gameActions from "../../redux/actions/gameActions";
 import * as deckActions from "../../redux/actions/deckActions";
 import PropTypes from "prop-types";
 import Header from "./../common/Header";
-import Card from "./Card";
 import MessageBox from "./MessageBox";
+import PlayerView from "./PlayerView";
 
 class Game extends React.Component {
   state = {
@@ -14,7 +14,8 @@ class Game extends React.Component {
       currentPlayer: 1,
       gameOver: false,
       winner: null,
-      cardLimit: false
+      cardLimit: false,
+      cardId: null
     },
     players: [{ name: "" }, { name: "" }],
     people: [],
@@ -24,7 +25,7 @@ class Game extends React.Component {
   componentDidMount() {
     const { game, players, people, deck } = this.props;
     this.setState({
-      game: game,
+      game,
       players,
       people,
       deck
@@ -52,7 +53,7 @@ class Game extends React.Component {
 
   render() {
     // console.log("render");
-    // console.log(this.state.deck);
+    // console.log(this.state.players);
     return (
       <div className="game">
         <Header />
@@ -63,42 +64,18 @@ class Game extends React.Component {
           deck={this.state.deck}
         />
         <div className="game__table">
-          {this.state.players.map((player, j) => {
+          {this.state.players.map((player, i) => {
             return (
-              <div key={j} className="game__playerView">
-                <div className="playerView__hand">
-                  <div className="playerView__desc">{`Karty gracza ${this.state.players[j].name}`}</div>
-                  {this.state.deck.map((card, k) => {
-                    return card.owner === j ? (
-                      <Card
-                        key={k}
-                        card={card}
-                        phase={this.state.game.phase}
-                        currentPlayer={j}
-                        {...(this.state.game.phase === 1 &&
-                          this.state.game.cardLimit &&
-                          this.state.game.currentPlayer === j && {
-                            discardCard: this.props.discardCard
-                          })}
-                        {...(this.state.game.phase === 2 &&
-                          this.state.game.currentPlayer === j && {
-                            gainFood: this.props.gainFood
-                          })}
-                      />
-                    ) : null;
-                  })}
-                </div>
-                <div className="game__playerInfo">
-                  {`Wioska ${this.state.players[j].name} Żywność: ${this.state.players[j].food}`}
-                </div>
-                <div className="playerView__cards">
-                  {this.state.people.map((card, i) => {
-                    if (card.owner === j) {
-                      return <Card key={i} card={card} />;
-                    }
-                  })}
-                </div>
-              </div>
+              <PlayerView
+                key={i}
+                player={player}
+                deck={this.state.deck}
+                people={this.state.people.filter(person => person.owner === i)}
+                game={this.state.game}
+                gainFood={this.props.gainFood}
+                discardCard={this.props.discardCard}
+                attachWeapon={this.props.attachWeapon}
+              />
             );
           })}
         </div>
@@ -108,12 +85,13 @@ class Game extends React.Component {
 }
 Game.propTypes = {
   game: PropTypes.object.isRequired,
+  players: PropTypes.array.isRequired,
+  people: PropTypes.array.isRequired,
+  deck: PropTypes.array.isRequired,
   nextPhase: PropTypes.func.isRequired,
   gainFood: PropTypes.func.isRequired,
   discardCard: PropTypes.func.isRequired,
-  players: PropTypes.array,
-  people: PropTypes.array,
-  deck: PropTypes.array
+  attachWeapon: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -128,7 +106,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   nextPhase: gameActions.nextPhase,
   gainFood: deckActions.gainFood,
-  discardCard: deckActions.discardCard
+  discardCard: deckActions.discardCard,
+  attachWeapon: deckActions.attachWeapon
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

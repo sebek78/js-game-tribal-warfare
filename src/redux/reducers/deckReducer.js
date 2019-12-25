@@ -1,6 +1,7 @@
 import types from "./../actions/actionTypes";
 import initialState from "./initialState";
 import { shuffle } from "./../../game_data/deck";
+import { DISCARDED_CARD, ATTACHED_CARD } from "./../../game_data/constants";
 
 export default function deckReducer(state = initialState.deck, action) {
   switch (action.type) {
@@ -11,8 +12,12 @@ export default function deckReducer(state = initialState.deck, action) {
         else return prevValue;
       }, 0);
       if (cardsLeft === 0) {
-        let discardedCards = state.filter(card => card.owner === -1);
-        let notDiscardedCards = state.filter(card => card.owner !== -1);
+        let discardedCards = state.filter(
+          card => card.owner === DISCARDED_CARD
+        );
+        let notDiscardedCards = state.filter(
+          card => card.owner !== DISCARDED_CARD
+        );
         let resetOwnerCards = discardedCards.map(card => {
           let cardCopy = { ...card };
           cardCopy.owner = null;
@@ -31,8 +36,18 @@ export default function deckReducer(state = initialState.deck, action) {
     case types.DISCARD_CARD: {
       const cardToDiscard = state.filter(card => card.id === action.cardID);
       let cardCopy = { ...cardToDiscard[0] };
-      cardCopy.owner = -1;
+      cardCopy.owner = DISCARDED_CARD;
       return state.map(card => (card.id === action.cardID ? cardCopy : card));
+    }
+    case types.SET_CARD_ATTACHED: {
+      const cardIndex = state.findIndex(
+        card => card.id === action.weaponCardId
+      );
+      let cardCopy = { ...state[cardIndex] };
+      cardCopy.owner = ATTACHED_CARD;
+      return state.map(card =>
+        card.id === action.weaponCardId ? cardCopy : card
+      );
     }
     default:
       return state;

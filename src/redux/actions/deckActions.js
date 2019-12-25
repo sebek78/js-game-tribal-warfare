@@ -47,6 +47,39 @@ export function discardCard(cardID) {
   };
 }
 
+export function attachWeapon(cardId, weaponCardId) {
+  return function(dispatch, getState) {
+    dispatch(setCardAttached(weaponCardId));
+    const weaponCardCopy = {
+      ...getState().deck.filter(card => card.id === weaponCardId)[0]
+    };
+    const cardCopy = {
+      ...getState().people.filter(card => card.id === cardId)[0]
+    };
+    if (weaponCardCopy.type === "meleeWeapon") {
+      cardCopy.meleeWeapon = weaponCardCopy;
+    }
+    if (weaponCardCopy.type === "rangeWeapon") {
+      cardCopy.rangeWeapon = weaponCardCopy;
+    }
+    return dispatch(updateCard(cardCopy));
+  };
+}
+
+function setCardAttached(weaponCardId) {
+  return {
+    type: types.SET_CARD_ATTACHED,
+    weaponCardId
+  };
+}
+
+function updateCard(card) {
+  return {
+    type: types.ATTACH_WEAPON,
+    card
+  };
+}
+
 function discardOneCard(cardID) {
   return {
     type: types.DISCARD_CARD,

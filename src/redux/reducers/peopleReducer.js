@@ -6,6 +6,7 @@ export default function peopleReducer(state = initialState.people, action) {
     case types.ADD_NEW_COMMON_PERSON: {
       let personCopy = { ...action.person };
       personCopy.owner = action.playerID;
+      personCopy.id = action.newId;
       return [...state, { ...personCopy }];
     }
     case types.ADD_NEW_PERSON: {
@@ -18,6 +19,10 @@ export default function peopleReducer(state = initialState.people, action) {
       newState.sort(compareStr);
       return newState;
     }
+    case types.ATTACH_WEAPON:
+      return state.map(card =>
+        card.id === action.card.id ? action.card : card
+      );
     default:
       return state.sort(compareStr);
   }

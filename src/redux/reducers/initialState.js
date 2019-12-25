@@ -7,11 +7,12 @@ let initialState = {
     currentPlayer: 0,
     gameOver: false,
     winner: null,
-    cardLimit: false
+    cardLimit: false,
+    cardId: null
   },
   players: [
-    { name: "A", food: INIT_FOOD_UNITS },
-    { name: "B", food: INIT_FOOD_UNITS }
+    { name: "A", id: 0, food: INIT_FOOD_UNITS },
+    { name: "B", id: 1, food: INIT_FOOD_UNITS }
   ],
   deck: [],
   people: []
@@ -26,15 +27,18 @@ export const person = {
   prisoner: false,
   value: 1,
   meleeWeapon: null,
-  rangedWeapon: null
+  rangeWeapon: null
 };
 let people = [];
-initialState.players.forEach((player, id) => {
+let cardId = 1000;
+initialState.players.forEach((player, index) => {
   for (let i = 0; i < INIT_PEOPLE; i++) {
-    const newPerson = { ...person, owner: id };
+    cardId += 1;
+    const newPerson = { ...person, owner: index, id: cardId };
     people.push(newPerson);
   }
 });
+initialState.game.cardId = cardId;
 
 initialState.people = people;
 

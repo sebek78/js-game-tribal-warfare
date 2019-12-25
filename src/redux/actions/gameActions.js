@@ -95,6 +95,12 @@ export function changePhase(phase, id) {
   }
 }
 
+export function increaseCardId() {
+  return {
+    type: types.INCREASE_CARD_ID
+  };
+}
+
 function checkWinConditions(p1, p2, names) {
   let winner = "";
   if (p1 >= 30 || p2 <= 0) {

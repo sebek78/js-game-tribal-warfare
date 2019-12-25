@@ -36,7 +36,26 @@ const deckData = [
   { name: "Grzyby", type: "food", number: 2, value: 2 },
   { name: "Korzenie", type: "food", number: 2, value: 2 },
   { name: "Bulwy", type: "food", number: 2, value: 2 },
-  { name: "Kora i liście", type: "food", number: 2, value: 1 }
+  { name: "Kora i liście", type: "food", number: 2, value: 1 },
+
+  { name: "Łuk refleksyjny", type: "rangeWeapon", number: 2, value: 8 },
+  { name: "Łuk i strzały", type: "rangeWeapon", number: 2, value: 7 },
+  { name: "Miotacz włóczni", type: "rangeWeapon", number: 2, value: 6 },
+  { name: "Bumerang", type: "rangeWeapon", number: 2, value: 5 },
+  { name: "Proca", type: "rangeWeapon", number: 2, value: 5 },
+  { name: "Oszczep", type: "rangeWeapon", number: 2, value: 5 },
+  { name: "Rzut skałą", type: "rangeWeapon", number: 2, value: 4 },
+  { name: "Rzut otaczakiem", type: "rangeWeapon", number: 2, value: 3 },
+  { name: "Kamienie", type: "rangeWeapon", number: 2, value: 2 },
+
+  { name: "Włócznia", type: "meleeWeapon", number: 2, value: 3 },
+  { name: "Kamienny topór", type: "meleeWeapon", number: 2, value: 3 },
+  { name: "Maczuga", type: "meleeWeapon", number: 2, value: 2 },
+  { name: "Drewninana Pałka", type: "meleeWeapon", number: 2, value: 2 },
+  { name: "Kamienny młot", type: "meleeWeapon", number: 2, value: 2 },
+  { name: "Krzemienny nóż", type: "meleeWeapon", number: 2, value: 1 },
+  { name: "Kostna pałka", type: "meleeWeapon", number: 2, value: 1 },
+  { name: "Kij", type: "meleeWeapon", number: 2, value: 1 }
 ];
 
 export default deckData;

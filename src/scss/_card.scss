@@ -2,7 +2,7 @@
   border: $border-thin-primary;
   width: 128px;
   height: 188px;
-  margin: 5px 0;
+  margin: 8px 0;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -57,4 +57,7 @@
     border-top: $border-thin-primary;
     line-height: 20px;
   }
+}
+.card__shadow {
+  box-shadow: 0px 0px 0px 4px $secondary-color;
 }
