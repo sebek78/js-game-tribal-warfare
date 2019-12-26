@@ -11,6 +11,10 @@ deckData.forEach(cardData => {
     newCard.value = cardData.value;
     newCard.owner = null;
     newCard.id = cardID;
+    if (cardData.type === "person") {
+      newCard.meleeWeapon = null;
+      newCard.rangeWeapon = null;
+    }
     newDeck.push(newCard);
     cardID++;
   }

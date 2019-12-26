@@ -1,0 +1,32 @@
+.manual {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 24px;
+  background-color: $card-bg-color;
+  font-family: $fancy-font;
+  .manual__title {
+    margin: 18px 0;
+    font-size: $bigger-font;
+    color: $primary-color;
+    letter-spacing: 3px;
+  }
+  .manual__subtitle {
+    margin: 12px 0;
+    font-size: $big-font;
+    color: $secondary-color;
+    letter-spacing: 2px;
+  }
+  .manual__small-title {
+    margin: 9px 0;
+    font-size: $higher-font;
+    color: $card-play-color;
+    letter-spacing: 1px;
+  }
+  .manual__text {
+    font-family: $regular-font;
+    text-align: left;
+    margin: 8px 0;
+    font-size: $medium-font;
+  }
+}
