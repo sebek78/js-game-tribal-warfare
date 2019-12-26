@@ -3,34 +3,45 @@ import PropTypes from "prop-types";
 import personImg from "./../../img/kr-person1.png";
 
 const Card = props => {
-  const { card, phase, currentPlayer, shadow, weaponCardId } = props;
+  const {
+    card,
+    phase,
+    currentPlayer,
+    shadow,
+    weaponCardId,
+    weaponCardType
+  } = props;
   const {
     gainFood,
     discardCard,
     setShadow,
     attachWeapon,
-    setWeaponCardId
+    setWeaponCardId,
+    setWeaponCardType
   } = props;
 
   useEffect(() => {}, [weaponCardId]);
 
   const renderCardValue = ({ type, value, meleeWeapon, rangeWeapon }) => {
-    let text = "";
     switch (type) {
       case "food":
-        return `Żywność +${value}`;
+        return <div>{`Żywność +${value}`}</div>;
       case "person":
-        if (meleeWeapon !== null) {
-          value += meleeWeapon.value;
-          text = `${meleeWeapon.name}`;
-        }
-        if (rangeWeapon !== null)
-          text = `${rangeWeapon.name} ${rangeWeapon.value}`;
-        return `Siła ${value} ${text}`;
+        return (
+          <>
+            <div>{`Siła ${
+              meleeWeapon !== null ? (value += meleeWeapon.value) : value
+            }`}</div>
+            {meleeWeapon !== null ? <div>{`${meleeWeapon.name}`}</div> : null}
+            {rangeWeapon !== null ? (
+              <div>{`${rangeWeapon.name} ${rangeWeapon.value}`}</div>
+            ) : null}
+          </>
+        );
       case "rangeWeapon":
-        return `Atak ${value}`;
+        return <div>{`Atak ${value}`}</div>;
       case "meleeWeapon":
-        return `Siła +${value}`;
+        return <div>{`Siła +${value}`}</div>;
       default:
         return "Nieznany typ karty";
     }
@@ -58,7 +69,7 @@ const Card = props => {
       ) {
         styleBtn = "card__Btn--play";
         text = "Przydziel";
-        action = () => handleClick(card.id);
+        action = () => handleWeaponCard(card.id, card.type);
       }
       if (text !== undefined)
         return (
@@ -71,22 +82,35 @@ const Card = props => {
     }
   };
 
-  const handleClick = id => {
+  const handleWeaponCard = (id, type) => {
     setShadow(true);
     if (setWeaponCardId !== undefined) setWeaponCardId(id);
+    if (setWeaponCardType !== undefined) setWeaponCardType(type);
   };
 
   const addWeapon = (type, shadow, cardId, weaponCardId) => {
     if (type === "person" && shadow === true) {
-      attachWeapon(card.id, weaponCardId);
+      attachWeapon(cardId, weaponCardId);
       setShadow(false);
       if (setWeaponCardId !== undefined) setWeaponCardId(-1);
     }
   };
 
+  const renderShadow = (shadow, weaponCardType, card) => {
+    if (card.type === "person") {
+      if (weaponCardType === "rangeWeapon" && card.rangeWeapon !== null)
+        shadow = false;
+      if (weaponCardType === "meleeWeapon" && card.meleeWeapon !== null)
+        shadow = false;
+      return shadow ? " card__shadow" : "";
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div
-      className={shadow ? "card card__shadow" : "card"}
+      className={"card" + renderShadow(shadow, weaponCardType, card)}
       onClick={() => addWeapon(card.type, shadow, card.id, weaponCardId)}
     >
       <div className="card__name">
@@ -112,6 +136,8 @@ Card.propTypes = {
   shadow: PropTypes.bool,
   setShadow: PropTypes.func,
   weaponCardId: PropTypes.number,
+  weaponCardType: PropTypes.string,
+  setWeaponCardType: PropTypes.func,
   setWeaponCardId: PropTypes.func,
   gainFood: PropTypes.func,
   discardCard: PropTypes.func,

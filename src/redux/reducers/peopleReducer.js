@@ -20,13 +20,21 @@ export default function peopleReducer(state = initialState.people, action) {
       return newState;
     }
     case types.ATTACH_WEAPON:
-      return state.map(card =>
-        card.id === action.card.id ? action.card : card
-      );
+      return state
+        .map(card => (card.id === action.card.id ? action.card : card))
+        .sort(compareStr);
     default:
       return state.sort(compareStr);
   }
 }
 
-// sort people card by strength
-const compareStr = (a, b) => b.value - a.value;
+// sort people card by strength, includes melee weapon strength and range weapon strength
+const compareStr = (a, b) => {
+  let c = { ...a };
+  let d = { ...b };
+  if (a.meleeWeapon !== null) c.value += a.meleeWeapon.value;
+  if (b.meleeWeapon !== null) d.value += b.meleeWeapon.value;
+  if (a.rangeWeapon !== null) c.value += a.rangeWeapon.value;
+  if (b.rangeWeapon !== null) d.value += b.rangeWeapon.value;
+  return d.value - c.value;
+};

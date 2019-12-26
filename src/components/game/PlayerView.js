@@ -8,6 +8,7 @@ const PlayerView = props => {
 
   let [shadow, setShadow] = useState(false);
   const [weaponCardId, setWeaponCardId] = useState(-1);
+  const [weaponCardType, setWeaponCardType] = useState("");
 
   useEffect(() => {}, [shadow, weaponCardId, deck, people]);
 
@@ -30,7 +31,8 @@ const PlayerView = props => {
               {...(game.phase === 4 &&
                 game.currentPlayer === player.id && {
                   setShadow,
-                  setWeaponCardId
+                  setWeaponCardId,
+                  setWeaponCardType
                 })}
             />
           ) : null;
@@ -50,6 +52,7 @@ const PlayerView = props => {
               shadow={shadow}
               weaponCardId={weaponCardId}
               setShadow={setShadow}
+              weaponCardType={weaponCardType}
             />
           );
         })}

@@ -49,19 +49,26 @@ export function discardCard(cardID) {
 
 export function attachWeapon(cardId, weaponCardId) {
   return function(dispatch, getState) {
-    dispatch(setCardAttached(weaponCardId));
     const weaponCardCopy = {
       ...getState().deck.filter(card => card.id === weaponCardId)[0]
     };
     const cardCopy = {
       ...getState().people.filter(card => card.id === cardId)[0]
     };
-    if (weaponCardCopy.type === "meleeWeapon") {
+    if (
+      weaponCardCopy.type === "meleeWeapon" &&
+      cardCopy.meleeWeapon === null
+    ) {
       cardCopy.meleeWeapon = weaponCardCopy;
-    }
-    if (weaponCardCopy.type === "rangeWeapon") {
+    } else if (
+      weaponCardCopy.type === "rangeWeapon" &&
+      cardCopy.rangeWeapon === null
+    ) {
       cardCopy.rangeWeapon = weaponCardCopy;
+    } else {
+      return;
     }
+    dispatch(setCardAttached(weaponCardId));
     return dispatch(updateCard(cardCopy));
   };
 }

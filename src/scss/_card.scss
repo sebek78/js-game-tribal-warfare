@@ -11,24 +11,25 @@
   .card__name {
     @include flex-center;
     height: 40px;
+    flex-shrink: 0;
     line-height: 16px;
     text-align: center;
-    font-size: 14px;
+    font-size: $small-font;
     border-bottom: $border-thin-primary;
   }
   .card__image {
-    height: 126px;
+    height: 99px;
     @include flex-center;
     position: relative;
     .TEST-image {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       outline: 1px dashed gray;
       margin: 2px auto;
     }
     .card__png {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       margin: 2px auto;
     }
     .card__Btn {
@@ -54,8 +55,14 @@
   }
 
   .card__value {
+    @include flex-center;
+    flex-direction: column;
+    text-align: center;
+    flex-grow: 0;
+    height: 49px;
     border-top: $border-thin-primary;
-    line-height: 20px;
+    font-size: $small-font;
+    line-height: 16px;
   }
 }
 .card__shadow {
