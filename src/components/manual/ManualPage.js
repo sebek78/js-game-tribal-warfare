@@ -71,6 +71,9 @@ const ManualPage = () => {
         typu.
       </p>
       <p className="manual__text">
+        Nie ma możliwości odebrania przydzielej broni do karty postaci.
+      </p>
+      <p className="manual__text">
         Po dodaniu karty broni karty ludzi są automatycznie sortowane i
         wyświetlane od najsilnijeszej do najsłabszej z uwzględnieniem siły karty
         postaci z sumą siły posiadanej przez nią broni.

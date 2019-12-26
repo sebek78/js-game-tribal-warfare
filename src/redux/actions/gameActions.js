@@ -87,6 +87,14 @@ export function changePhase(phase, id) {
         currentPlayer: nextPlayer
       };
     }
+    // case 3 event phase
+    case 2: {
+      return {
+        type: types.NEXT_PHASE,
+        currentPhase: phase + 2
+      };
+    }
+
     default:
       return {
         type: types.NEXT_PHASE,

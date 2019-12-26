@@ -22,7 +22,7 @@ const MessageBox = props => {
           }, 0);
           if (cardsInHand <= CARD_LIMIT) {
             setBtnText("Losuj");
-            setMessage("Nowe zasoby");
+            setMessage("Początek dnia");
             setShowBtn(true);
           } else {
             setMessage("Maksymalnie 5 kart w ręce. Wyrzuć dowolną kartę.");
@@ -39,7 +39,7 @@ const MessageBox = props => {
         if (!showBtn) setShowBtn(true);
         if (foodCardsInHand === 0) {
           setBtnText("Dalej");
-          setMessage("Niestety nic nie upolowano i nic nie znaleziono");
+          setMessage("Nowe karty");
         } else {
           setMessage("Możesz zagrać nową kartą żywności");
           setBtnText("Pomiń zdobycie jedzenia");
@@ -51,12 +51,12 @@ const MessageBox = props => {
         setMessage("(zdarzenia)");
         break;
       case 4:
-        setBtnText("następna tura");
-        setMessage("Nowi ludzie w osadzie");
+        setBtnText("Dalej");
+        setMessage("Decyzje w wiosce");
         break;
       case 5:
-        setBtnText("następna tura");
-        setMessage("Główny posiłek dnia (konsumowanie żywności)");
+        setBtnText("Zjedz");
+        setMessage("Główny posiłek dnia");
         break;
       case 6:
         setBtnText("następna tura");
