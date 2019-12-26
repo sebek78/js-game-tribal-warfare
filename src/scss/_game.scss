@@ -9,42 +9,4 @@
     justify-content: space-between;
     background-color: $bg-table-color;
   }
-  .game__playerView {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  }
-  .playerView__desc {
-    height: 24px;
-    @include flex-center();
-    width: 100%;
-    margin-bottom: 4px;
-  }
-  .playerView__hand {
-    margin: 8px;
-    border: $border-font-color;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    min-height: 230px;
-    position: relative;
-    background-color: $bg-color;
-  }
-  .game__playerInfo {
-    margin: 8px 8px 0;
-    @include flex-center();
-    background-color: $bg-color;
-    height: 30px;
-    border: $border-font-color;
-    border-bottom: 0;
-  }
-  .playerView__cards {
-    margin: 0 8px 8px;
-    padding: 8px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    border: $border-font-color;
-    border-top: 0;
-  }
 }

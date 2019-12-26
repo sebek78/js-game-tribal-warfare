@@ -13,7 +13,7 @@ const PlayerView = props => {
   useEffect(() => {}, [shadow, weaponCardId, deck, people]);
 
   return (
-    <div className="game__playerView">
+    <div className="playerView">
       <div className="playerView__hand">
         <div className="playerView__desc">{`Karty gracza ${player.name}`}</div>
         {deck.map((card, k) => {
@@ -38,7 +38,7 @@ const PlayerView = props => {
           ) : null;
         })}
       </div>
-      <div className="game__playerInfo">
+      <div className="playerView__info">
         {`Wioska ${player.name} Żywność: ${player.food}`}
       </div>
       <div className="playerView__cards">
