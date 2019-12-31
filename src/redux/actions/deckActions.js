@@ -73,10 +73,10 @@ export function attachWeapon(cardId, weaponCardId) {
   };
 }
 
-function setCardAttached(weaponCardId) {
+export function setCardAttached(cardId) {
   return {
     type: types.SET_CARD_ATTACHED,
-    weaponCardId
+    cardId
   };
 }
 

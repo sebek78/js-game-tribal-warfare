@@ -1,5 +1,6 @@
 import types from "./../actions/actionTypes";
 import initialState from "./initialState";
+import { KILLED_IN_BATTLE } from "../../game_data/constants";
 
 export default function peopleReducer(state = initialState.people, action) {
   switch (action.type) {
@@ -23,6 +24,17 @@ export default function peopleReducer(state = initialState.people, action) {
       return state
         .map(card => (card.id === action.card.id ? action.card : card))
         .sort(compareStr);
+    case types.RESOLVE_BATTLE: {
+      const stateCopy = state.map(person => {
+        return { ...person };
+      });
+      action.killedIds.forEach(id => {
+        stateCopy.map(person => {
+          if (person.id === id) person.owner = KILLED_IN_BATTLE;
+        });
+      });
+      return stateCopy.filter(person => person.owner !== KILLED_IN_BATTLE);
+    }
     default:
       return state.sort(compareStr);
   }

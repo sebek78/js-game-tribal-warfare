@@ -55,7 +55,12 @@ const deckData = [
   { name: "Kamienny młot", type: "meleeWeapon", number: 2, value: 2 },
   { name: "Krzemienny nóż", type: "meleeWeapon", number: 2, value: 1 },
   { name: "Kostna pałka", type: "meleeWeapon", number: 2, value: 1 },
-  { name: "Kij", type: "meleeWeapon", number: 2, value: 1 }
+  { name: "Kij", type: "meleeWeapon", number: 2, value: 1 },
+
+  { name: "Zasadzka", type: "raid", number: 3, value: 0 },
+  { name: "Atak z zaskoczenia", type: "raid", number: 3, value: 0 },
+  { name: "Zażarta walka", type: "raid", number: 3, value: 0 },
+  { name: "Wyprawa wojenna", type: "raid", number: 3, value: 0 }
 ];
 
 export default deckData;

@@ -17,7 +17,8 @@ const Card = props => {
     setShadow,
     attachWeapon,
     setWeaponCardId,
-    setWeaponCardType
+    setWeaponCardType,
+    resolveBattle
   } = props;
 
   useEffect(() => {}, [weaponCardId]);
@@ -42,6 +43,8 @@ const Card = props => {
         return <div>{`Atak ${value}`}</div>;
       case "meleeWeapon":
         return <div>{`Siła +${value}`}</div>;
+      case "raid":
+        return <div>{`Rajd`}</div>;
       default:
         return "Nieznany typ karty";
     }
@@ -70,6 +73,10 @@ const Card = props => {
         styleBtn = "card__Btn--play";
         text = "Przydziel";
         action = () => handleWeaponCard(card.id, card.type);
+      } else if (phase === 6 && card.type === "raid" && resolveBattle !== undefined) {
+        styleBtn = "card__Btn--discard";
+        text = "Atak";
+        action = () => resolveBattle(card.id, currentPlayer);
       }
       if (text !== undefined)
         return (
@@ -139,6 +146,7 @@ Card.propTypes = {
   weaponCardType: PropTypes.string,
   setWeaponCardType: PropTypes.func,
   setWeaponCardId: PropTypes.func,
+  resolveBattle: PropTypes.func,
   gainFood: PropTypes.func,
   discardCard: PropTypes.func,
   attachWeapon: PropTypes.func

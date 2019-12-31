@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as gameActions from "../../redux/actions/gameActions";
 import * as deckActions from "../../redux/actions/deckActions";
+import * as peopleActions from "../../redux/actions/peopleActions";
 import PropTypes from "prop-types";
 import Header from "./../common/Header";
 import MessageBox from "./MessageBox";
@@ -75,6 +76,7 @@ class Game extends React.Component {
                 gainFood={this.props.gainFood}
                 discardCard={this.props.discardCard}
                 attachWeapon={this.props.attachWeapon}
+                resolveBattle={this.props.resolveBattle}
               />
             );
           })}
@@ -91,7 +93,8 @@ Game.propTypes = {
   nextPhase: PropTypes.func.isRequired,
   gainFood: PropTypes.func.isRequired,
   discardCard: PropTypes.func.isRequired,
-  attachWeapon: PropTypes.func.isRequired
+  attachWeapon: PropTypes.func.isRequired,
+  resolveBattle: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -107,7 +110,8 @@ const mapDispatchToProps = {
   nextPhase: gameActions.nextPhase,
   gainFood: deckActions.gainFood,
   discardCard: deckActions.discardCard,
-  attachWeapon: deckActions.attachWeapon
+  attachWeapon: deckActions.attachWeapon,
+  resolveBattle: peopleActions.resolveBattle
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

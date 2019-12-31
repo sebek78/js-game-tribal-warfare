@@ -4,7 +4,7 @@ import Card from "./Card";
 
 const PlayerView = props => {
   const { player, deck, people, game } = props;
-  const { gainFood, discardCard, attachWeapon } = props;
+  const { gainFood, discardCard, attachWeapon, resolveBattle } = props;
 
   let [shadow, setShadow] = useState(false);
   const [weaponCardId, setWeaponCardId] = useState(-1);
@@ -34,6 +34,8 @@ const PlayerView = props => {
                   setWeaponCardId,
                   setWeaponCardType
                 })}
+              {...(game.phase === 6 &&
+                game.currentPlayer === player.id && { resolveBattle })}
             />
           ) : null;
         })}
@@ -68,7 +70,8 @@ PlayerView.propTypes = {
   people: PropTypes.array.isRequired,
   gainFood: PropTypes.func.isRequired,
   discardCard: PropTypes.func.isRequired,
-  attachWeapon: PropTypes.func.isRequired
+  attachWeapon: PropTypes.func.isRequired,
+  resolveBattle: PropTypes.func.isRequired
 };
 
 export default PlayerView;

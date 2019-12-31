@@ -40,14 +40,10 @@ export default function deckReducer(state = initialState.deck, action) {
       return state.map(card => (card.id === action.cardID ? cardCopy : card));
     }
     case types.SET_CARD_ATTACHED: {
-      const cardIndex = state.findIndex(
-        card => card.id === action.weaponCardId
-      );
+      const cardIndex = state.findIndex(card => card.id === action.cardId);
       let cardCopy = { ...state[cardIndex] };
       cardCopy.owner = ATTACHED_CARD;
-      return state.map(card =>
-        card.id === action.weaponCardId ? cardCopy : card
-      );
+      return state.map(card => (card.id === action.cardId ? cardCopy : card));
     }
     default:
       return state;
